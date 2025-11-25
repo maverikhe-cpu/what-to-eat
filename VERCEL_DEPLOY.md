@@ -44,16 +44,22 @@ Vercel 会自动检测到项目配置（已在 `vercel.json` 中配置），但�
 
 在部署前，必须配置以下环境变量：
 
+> 📖 **详细 API 获取指南**：请查看 [API_GUIDE.md](./API_GUIDE.md) 了解如何获取 API 密钥和推荐的服务商
+
 点击 **"Environment Variables"** 添加以下变量：
 
 ```env
-VITE_TEXT_GENERATION_BASE_URL=https://api.lingyiwanwu.com/v1/
+VITE_TEXT_GENERATION_BASE_URL=https://api.302ai.cn/v1/
 VITE_TEXT_GENERATION_API_KEY=你的文本生成API密钥
-VITE_TEXT_GENERATION_MODEL=yi-lightning
-VITE_IMAGE_GENERATION_BASE_URL=https://open.bigmodel.cn/api/paas/v4/
+VITE_TEXT_GENERATION_MODEL=doubao-1.5-pro-32k
+VITE_IMAGE_GENERATION_BASE_URL=https://open.bigmodel.cn/api/paas/v4/images/generations
 VITE_IMAGE_GENERATION_API_KEY=你的图片生成API密钥
 VITE_IMAGE_GENERATION_MODEL=cogview-3-flash
 ```
+
+**推荐配置**（高性价比）：
+- **文本生成**：302.AI + 豆包 Pro（`doubao-1.5-pro-32k`）
+- **图片生成**：智谱 AI（`cogview-3-flash`）
 
 **添加步骤**：
 1. 点击 **"Add"** 按钮

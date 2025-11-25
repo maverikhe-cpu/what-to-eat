@@ -18,17 +18,23 @@
 
 部署前需要配置以下环境变量：
 
+> 📖 **详细 API 获取指南**：请查看 [API_GUIDE.md](./API_GUIDE.md) 了解如何获取 API 密钥和推荐的服务商
+
 ```env
-# 文本生成 API（零一万物）
-VITE_TEXT_GENERATION_BASE_URL=https://api.lingyiwanwu.com/v1/
+# 文本生成 API（推荐：302.AI）
+VITE_TEXT_GENERATION_BASE_URL=https://api.302ai.cn/v1/
 VITE_TEXT_GENERATION_API_KEY=your_text_api_key_here
-VITE_TEXT_GENERATION_MODEL=yi-lightning
+VITE_TEXT_GENERATION_MODEL=doubao-1.5-pro-32k
 
 # 图片生成 API（智谱 AI）
-VITE_IMAGE_GENERATION_BASE_URL=https://open.bigmodel.cn/api/paas/v4/
+VITE_IMAGE_GENERATION_BASE_URL=https://open.bigmodel.cn/api/paas/v4/images/generations
 VITE_IMAGE_GENERATION_API_KEY=your_image_api_key_here
 VITE_IMAGE_GENERATION_MODEL=cogview-3-flash
 ```
+
+**快速获取 API 密钥**：
+1. 查看 [API_GUIDE.md](./API_GUIDE.md) 了解详细步骤
+2. 推荐使用 **302.AI**（文本生成）+ **智谱 AI**（图片生成）的组合
 
 ## 📋 部署步骤
 
