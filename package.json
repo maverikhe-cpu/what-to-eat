@@ -14,6 +14,7 @@
         "test:headed": "playwright test --headed"
     },
     "dependencies": {
+        "@vercel/node": "^5.5.12",
         "@vueuse/core": "^10.7.0",
         "axios": "^1.6.0",
         "markdown-it": "^14.1.0",
@@ -25,7 +26,6 @@
         "@netlify/functions": "^5.1.0",
         "@playwright/test": "^1.57.0",
         "@types/node": "^20.19.11",
-        "@vercel/node": "^5.5.12",
         "@vitejs/plugin-vue": "^5.0.0",
         "autoprefixer": "^10.4.0",
         "playwright": "^1.57.0",
