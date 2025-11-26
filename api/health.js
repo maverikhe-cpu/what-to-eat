@@ -1,9 +1,8 @@
-import { VercelRequest, VercelResponse } from '@vercel/node'
-
 /**
  * 健康检查端点，用于诊断代理配置
+ * 使用 JavaScript 版本以确保兼容性
  */
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+module.exports = async function handler(req, res) {
   try {
     // 设置 CORS 头
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -33,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       config,
       timestamp: new Date().toISOString()
     })
-  } catch (error: any) {
+  } catch (error) {
     console.error('Health check error:', error)
     res.status(500).json({
       status: 'error',
