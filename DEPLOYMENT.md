@@ -16,21 +16,46 @@
 
 ## 🔧 环境变量配置
 
+> ⚠️ **重要安全更新**：为了保障 API 密钥安全，项目已改为使用服务器端代理。API 密钥不再暴露在前端代码中。
+
 部署前需要配置以下环境变量：
 
 > 📖 **详细 API 获取指南**：请查看 [API_GUIDE.md](./API_GUIDE.md) 了解如何获取 API 密钥和推荐的服务商
 
+### 服务器端环境变量（必需）
+
+这些环境变量配置在 Vercel/Netlify 的项目设置中，**不使用 VITE_ 前缀**：
+
 ```env
 # 文本生成 API（推荐：302.AI）
-VITE_TEXT_GENERATION_BASE_URL=https://api.302ai.cn/v1/
-VITE_TEXT_GENERATION_API_KEY=your_text_api_key_here
-VITE_TEXT_GENERATION_MODEL=doubao-1.5-pro-32k
+TEXT_GENERATION_BASE_URL=https://api.302ai.cn/v1/
+TEXT_GENERATION_API_KEY=your_text_api_key_here
+TEXT_GENERATION_MODEL=doubao-1.5-pro-32k
 
 # 图片生成 API（智谱 AI）
+IMAGE_GENERATION_BASE_URL=https://open.bigmodel.cn/api/paas/v4/images/generations
+IMAGE_GENERATION_API_KEY=your_image_api_key_here
+IMAGE_GENERATION_MODEL=cogview-3-flash
+```
+
+### 前端环境变量（可选，仅用于开发环境）
+
+如果需要本地开发，可以配置以下环境变量（使用 VITE_ 前缀）：
+
+```env
+# 本地开发环境变量（可选）
+VITE_TEXT_GENERATION_BASE_URL=https://api.302ai.cn/v1/
+VITE_TEXT_GENERATION_MODEL=doubao-1.5-pro-32k
+VITE_TEXT_GENERATION_TEMPERATURE=0.7
+VITE_TEXT_GENERATION_TIMEOUT=300000
+
 VITE_IMAGE_GENERATION_BASE_URL=https://open.bigmodel.cn/api/paas/v4/images/generations
-VITE_IMAGE_GENERATION_API_KEY=your_image_api_key_here
 VITE_IMAGE_GENERATION_MODEL=cogview-3-flash
 ```
+
+> ⚠️ **注意**：本地开发时，如果配置了前端环境变量，系统会尝试使用代理 API（`/api/chat` 和 `/api/images`）。你需要：
+> 1. 使用 Vercel CLI 运行 `vercel dev` 来启动本地开发服务器（支持 Serverless Functions）
+> 2. 或者配置本地代理服务器
 
 **快速获取 API 密钥**：
 1. 查看 [API_GUIDE.md](./API_GUIDE.md) 了解详细步骤
@@ -43,11 +68,11 @@ VITE_IMAGE_GENERATION_MODEL=cogview-3-flash
 1. **Fork 项目**到你的 GitHub 账户
 2. **登录 Vercel**并连接 GitHub
 3. **导入项目**：选择 fork 的仓库
-4. **配置环境变量**：在 Vercel 项目设置中添加上述环境变量
+4. **配置环境变量**：在 Vercel 项目设置 > Environment Variables 中添加服务器端环境变量（**不使用 VITE_ 前缀**）
 5. **部署**：Vercel 会自动构建和部署
 
 或者使用一键部署：
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/liu-ziting/what-to-eat&env=VITE_TEXT_GENERATION_BASE_URL,VITE_TEXT_GENERATION_API_KEY,VITE_TEXT_GENERATION_MODEL,VITE_IMAGE_GENERATION_BASE_URL,VITE_IMAGE_GENERATION_API_KEY,VITE_IMAGE_GENERATION_MODEL&envDescription=AI%20API%20配置)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/liu-ziting/what-to-eat&env=TEXT_GENERATION_BASE_URL,TEXT_GENERATION_API_KEY,TEXT_GENERATION_MODEL,IMAGE_GENERATION_BASE_URL,IMAGE_GENERATION_API_KEY,IMAGE_GENERATION_MODEL&envDescription=AI%20API%20配置（服务器端环境变量）)
 
 ### Netlify 部署步骤
 
@@ -58,7 +83,7 @@ VITE_IMAGE_GENERATION_MODEL=cogview-3-flash
     - Build command: `npm run build:netlify`
     - Publish directory: `dist`
     - Node version: `18`
-5. **环境变量**：在 Netlify 站点设置中添加环境变量
+5. **环境变量**：在 Netlify 站点设置 > Environment variables 中添加服务器端环境变量（**不使用 VITE_ 前缀**）
 6. **部署**：Netlify 会自动构建和部署
 
 或者使用一键部署：

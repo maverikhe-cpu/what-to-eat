@@ -182,14 +182,19 @@
 
                                         <!-- 配置项网格 -->
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">API密钥</label>
-                                                <input
-                                                    v-model="textConfig.apiKey"
-                                                    type="password"
-                                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                                                    placeholder="输入API密钥"
-                                                />
+                                            <!-- API密钥提示 -->
+                                            <div class="md:col-span-2">
+                                                <div class="bg-blue-50 border border-blue-200 rounded-md p-3">
+                                                    <div class="flex items-start">
+                                                        <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                        </svg>
+                                                        <div class="flex-1">
+                                                            <p class="text-sm font-medium text-blue-800">API密钥安全提示</p>
+                                                            <p class="text-xs text-blue-600 mt-1">API密钥现在在服务器端安全配置，不再在前端显示或编辑。如需修改，请在部署平台（Vercel/Netlify）的环境变量设置中更新。</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div>
@@ -257,14 +262,19 @@
 
                                         <!-- 配置项网格 -->
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">API密钥</label>
-                                                <input
-                                                    v-model="imageConfig.apiKey"
-                                                    type="password"
-                                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
-                                                    placeholder="输入API密钥"
-                                                />
+                                            <!-- API密钥提示 -->
+                                            <div class="md:col-span-2">
+                                                <div class="bg-green-50 border border-green-200 rounded-md p-3">
+                                                    <div class="flex items-start">
+                                                        <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                        </svg>
+                                                        <div class="flex-1">
+                                                            <p class="text-sm font-medium text-green-800">API密钥安全提示</p>
+                                                            <p class="text-xs text-green-600 mt-1">API密钥现在在服务器端安全配置，不再在前端显示或编辑。如需修改，请在部署平台（Vercel/Netlify）的环境变量设置中更新。</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div>

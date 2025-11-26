@@ -1,5 +1,6 @@
 import type { Recipe } from '@/types'
 import { getImageGenerationConfig } from '@/utils/apiConfig'
+import { getImageApiEndpoint } from '@/utils/apiProxy'
 
 export interface GeneratedImage {
     url: string
@@ -16,11 +17,12 @@ export const generateRecipeImage = async (recipe: Recipe): Promise<GeneratedImag
     const sizeToUse = { width: 1152, height: 896 }
 
     try {
-        const response = await fetch(config.baseUrl, {
+        // 使用代理端点，不再直接调用图片生成 API
+        const response = await fetch(getImageApiEndpoint(), {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${config.apiKey}`
+                'Content-Type': 'application/json'
+                // 注意：不再包含 Authorization header，由服务器端代理添加
             },
             body: JSON.stringify({
                 model: config.model,
@@ -33,7 +35,14 @@ export const generateRecipeImage = async (recipe: Recipe): Promise<GeneratedImag
         })
 
         if (!response.ok) {
-            throw new Error(`API请求失败: ${response.status}`)
+            const errorData = await response.json().catch(() => ({}))
+            
+            // 检查是否是配置错误
+            if (response.status === 500 && errorData?.error === 'Server configuration error: API credentials not found') {
+                throw new Error('服务器配置错误：请检查环境变量配置。图片生成API密钥需要在部署平台（Vercel/Netlify）的环境变量中设置，且不使用VITE_前缀。')
+            }
+            
+            throw new Error(errorData?.message || `API请求失败: ${response.status}`)
         }
 
         const data = await response.json()
@@ -46,8 +55,14 @@ export const generateRecipeImage = async (recipe: Recipe): Promise<GeneratedImag
         } else {
             throw new Error('API返回数据格式错误')
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error('生成图片失败:', error)
+        
+        // 检查是否是网络错误
+        if (error?.message?.includes('Network Error') || error?.message?.includes('Failed to fetch')) {
+            throw new Error('网络连接失败，请检查代理API是否正常工作。如果使用Vercel/Netlify，请确保Serverless Functions已正确部署。')
+        }
+        
         throw error
     }
 }

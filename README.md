@@ -74,7 +74,7 @@ npm run preview
 
 ### Vercel 部署
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/liu-ziting/what-to-eat&env=VITE_TEXT_GENERATION_BASE_URL,VITE_TEXT_GENERATION_API_KEY,VITE_TEXT_GENERATION_MODEL,VITE_IMAGE_GENERATION_BASE_URL,VITE_IMAGE_GENERATION_API_KEY,VITE_IMAGE_GENERATION_MODEL&envDescription=AI%20API%20配置&envLink=https://github.com/liu-ziting/what-to-eat%23环境变量配置)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/liu-ziting/what-to-eat&env=TEXT_GENERATION_BASE_URL,TEXT_GENERATION_API_KEY,TEXT_GENERATION_MODEL,IMAGE_GENERATION_BASE_URL,IMAGE_GENERATION_API_KEY,IMAGE_GENERATION_MODEL&envDescription=AI%20API%20配置（服务器端环境变量）&envLink=https://github.com/liu-ziting/what-to-eat%23环境变量配置)
 
 ### Netlify 部署
 
@@ -84,24 +84,29 @@ npm run preview
 
 ### 环境变量配置
 
-#### 你可以切换任何符合 OpenAI 标准的请求地址和模型
+#### 🔒 安全更新
 
-> **🌟 模型推荐**: 建议使用高质量 AI 大模型获得更好的菜谱生成效果！不同模型的创意风格和专业程度差异显著。
+> ⚠️ **重要**：为了保障 API 密钥安全，项目已改为使用**服务器端代理**。API 密钥不再暴露在前端代码中。
+
+#### 服务器端环境变量（部署时配置）
+
+在 Vercel/Netlify 项目设置中配置以下环境变量（**不使用 VITE_ 前缀**）：
 
 ```env
 # 菜谱生成模型配置（文本生成）
-VITE_TEXT_GENERATION_BASE_URL=https://********/v1/
-VITE_TEXT_GENERATION_API_KEY=************
-VITE_TEXT_GENERATION_MODEL=******
-VITE_TEXT_GENERATION_TEMPERATURE=0.7
-VITE_TEXT_GENERATION_TIMEOUT=300000
+TEXT_GENERATION_BASE_URL=https://api.302ai.cn/v1/
+TEXT_GENERATION_API_KEY=your_api_key_here
+TEXT_GENERATION_MODEL=doubao-1.5-pro-32k
 
 # 图片生成模型配置
-VITE_IMAGE_GENERATION_BASE_URL=https://open.bigmodel.cn/api/paas/v4/images/generations
-VITE_IMAGE_GENERATION_API_KEY=******************
-VITE_IMAGE_GENERATION_MODEL=cogview-3-flash
-
+IMAGE_GENERATION_BASE_URL=https://open.bigmodel.cn/api/paas/v4/images/generations
+IMAGE_GENERATION_API_KEY=your_api_key_here
+IMAGE_GENERATION_MODEL=cogview-3-flash
 ```
+
+> **🌟 模型推荐**: 建议使用高质量 AI 大模型获得更好的菜谱生成效果！不同模型的创意风格和专业程度差异显著。
+
+> 📖 **详细说明**：请查看 [DEPLOYMENT.md](./DEPLOYMENT.md) 和 [SECURITY_UPDATE.md](./SECURITY_UPDATE.md) 了解完整的安全更新和迁移指南。
 
 ### ⚙️ 动态配置系统
 
@@ -114,13 +119,16 @@ VITE_IMAGE_GENERATION_MODEL=cogview-3-flash
 -   **分离管理** - 菜谱生成和图片生成模型独立配置
 -   **配置验证** - 内置 API 连接测试功能
 -   **一键恢复** - 支持恢复环境变量默认配置
+-   **安全保护** - API 密钥在服务器端安全存储，不在前端显示
 
 #### 🚀 使用方法
 
 1. 点击导航栏右侧的 ⚙️ 设置按钮
-2. 在弹窗中修改 API 地址、密钥、模型等参数
+2. 在弹窗中修改 API 地址、模型等参数（API 密钥在服务器端配置）
 3. 点击"保存设置"立即应用配置
 4. 使用"测试配置"验证设置是否正确
+
+> ⚠️ **注意**：API 密钥现在在服务器端环境变量中配置，不在前端设置页面显示。如需修改 API 密钥，请在部署平台（Vercel/Netlify）的环境变量设置中更新。
 
 #### 🎯 模型效果说明
 

@@ -14,16 +14,19 @@ import type {
     NumberFortuneParams
 } from '@/types'
 import { getTextGenerationConfig } from '@/utils/apiConfig'
+import { getChatApiEndpoint } from '@/utils/apiProxy'
 
-// 创建动态axios实例
+// 创建动态axios实例（使用代理 API）
 const createAiClient = () => {
     const config = getTextGenerationConfig()
+    // 使用代理端点，不再直接调用 AI API
+    // API key 由服务器端代理添加，前端不再包含
     return axios.create({
-        baseURL: config.baseUrl,
+        baseURL: getChatApiEndpoint(),
         timeout: config.timeout,
         headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${config.apiKey}`
+            'Content-Type': 'application/json'
+            // 注意：不再包含 Authorization header，由服务器端代理添加
         }
     })
 }
@@ -71,8 +74,8 @@ export const generateRecipe = async (ingredients: string[], cuisine: CuisineType
   "tips": ["技巧1", "技巧2"]
 }`
 
-        // 调用AI接口
-        const response = await aiClient.post('/chat/completions', {
+        // 调用AI接口（通过代理）
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -125,8 +128,29 @@ export const generateRecipe = async (ingredients: string[], cuisine: CuisineType
         // 检查是否是400错误或其他特定错误
         if (error && typeof error === 'object' && 'response' in error) {
             const axiosError = error as any
-            if (axiosError.response?.status === 400) {
+            const status = axiosError.response?.status
+            const errorData = axiosError.response?.data
+
+            // 检查是否是配置错误
+            if (status === 500 && errorData?.error === 'Server configuration error: API credentials not found') {
+                throw new Error('服务器配置错误：请检查环境变量配置。API密钥需要在部署平台（Vercel/Netlify）的环境变量中设置，且不使用VITE_前缀。')
+            }
+
+            if (status === 400) {
                 throw new Error(`${cuisine.name}表示这个食材搭配太有挑战性了`)
+            }
+
+            // 显示服务器返回的错误信息
+            if (errorData?.message) {
+                throw new Error(errorData.message)
+            }
+        }
+
+        // 检查是否是网络错误
+        if (error && typeof error === 'object' && 'message' in error) {
+            const err = error as any
+            if (err.message?.includes('Network Error') || err.code === 'ERR_NETWORK') {
+                throw new Error('网络连接失败，请检查代理API是否正常工作。如果使用Vercel/Netlify，请确保Serverless Functions已正确部署。')
             }
         }
 
@@ -240,7 +264,7 @@ export const generateTableMenu = async (config: {
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -308,7 +332,7 @@ export const generateDishRecipe = async (dishName: string, dishDescription: stri
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -385,7 +409,7 @@ export const generateCustomRecipe = async (ingredients: string[], customPrompt: 
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -516,7 +540,7 @@ export const getNutritionAnalysis = async (recipe: Recipe): Promise<NutritionAna
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -582,7 +606,7 @@ export const getWinePairing = async (recipe: Recipe): Promise<WinePairing> => {
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -865,7 +889,7 @@ export const testAIConnection = async (): Promise<boolean> => {
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -917,7 +941,7 @@ export const generateDishRecipeByName = async (dishName: string): Promise<Recipe
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -1020,7 +1044,7 @@ export const generateSauceRecipe = async (sauceName: string): Promise<SauceRecip
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -1122,7 +1146,7 @@ export const recommendSauces = async (preferences: SaucePreference): Promise<str
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -1222,7 +1246,7 @@ ${request.customRequirements ? `- 特殊要求：${request.customRequirements}` 
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -1307,7 +1331,7 @@ export const getSaucePairings = async (sauceName: string): Promise<string[]> => 
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -1371,7 +1395,7 @@ export const generateDailyFortune = async (params: DailyFortuneParams): Promise<
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -1454,7 +1478,7 @@ export const generateMoodCooking = async (params: MoodFortuneParams): Promise<Fo
 
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -1541,7 +1565,7 @@ export const generateCoupleCooking = async (params: CoupleFortuneParams): Promis
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -1623,7 +1647,7 @@ export const generateNumberFortune = async (params: NumberFortuneParams): Promis
 
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
-        const response = await aiClient.post('/chat/completions', {
+        const response = await aiClient.post('', {
             model: apiConfig.model,
             messages: [
                 {
@@ -1689,10 +1713,11 @@ export const chatStream = async (
     onError?: (err: unknown) => void
 ): Promise<void> => {
     const config = getTextGenerationConfig()
-    const url = config.baseUrl.replace(/\/$/, '') + '/chat/completions'
+    // 使用代理端点，不再直接调用 AI API
+    const url = getChatApiEndpoint()
     const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${config.apiKey}`
+        'Content-Type': 'application/json'
+        // 注意：不再包含 Authorization header，由服务器端代理添加
     }
 
     const body = JSON.stringify({
