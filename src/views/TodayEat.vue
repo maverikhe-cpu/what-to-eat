@@ -7,12 +7,12 @@
             <!-- 开始按钮 -->
             <div v-if="!isSelecting && selectedDishes.length === 0" class="text-center">
                 <div class="bg-white rounded-lg shadow-lg p-8 border-2 border-[#0A0910]">
-                    <div class="text-6xl mb-4">🎲</div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">准备好了吗？</h2>
+                    <div class="text-5xl md:text-6xl mb-4">🎲</div>
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">准备好了吗？</h2>
 
                     <button
                         @click="startRandomSelection"
-                        class="px-8 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl font-semibold hover:from-orange-600 hover:to-red-600 transition-all transform hover:scale-105 shadow-lg mb-4"
+                        class="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl font-semibold hover:from-orange-600 hover:to-red-600 transition-all transform hover:scale-105 shadow-lg mb-4 min-h-[48px] text-base md:text-lg"
                     >
                         {{ randomDice }} 开始随机选择
                     </button>

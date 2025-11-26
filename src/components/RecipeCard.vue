@@ -44,7 +44,7 @@
             <div class="mb-4">
                 <div class="flex items-center justify-between mb-2">
                     <h4 class="text-sm font-bold text-dark-800 flex items-center gap-1">📝 制作步骤</h4>
-                    <button @click="toggleExpanded" class="bg-gray-100 hover:bg-gray-200 text-dark-800 text-xs px-2 py-1 rounded border border-black transition-colors">
+                    <button @click="toggleExpanded" class="bg-gray-100 hover:bg-gray-200 text-dark-800 text-xs px-3 py-2 rounded border border-black transition-colors min-h-[36px] min-w-[60px]">
                         {{ isExpanded ? '收起' : '展开' }}
                     </button>
                 </div>

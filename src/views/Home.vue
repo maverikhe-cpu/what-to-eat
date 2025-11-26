@@ -14,8 +14,8 @@
                         <div class="w-16 h-16 bg-black rounded-lg flex items-center justify-center mx-auto mb-4">
                             <span class="text-white text-2xl">🥬</span>
                         </div>
-                        <h2 class="text-2xl font-bold text-dark-800 mb-2">添加食材</h2>
-                        <p class="text-gray-600">输入你现有的食材，按回车添加</p>
+                        <h2 class="text-xl md:text-2xl font-bold text-dark-800 mb-2">添加食材</h2>
+                        <p class="text-sm md:text-base text-gray-600">输入你现有的食材，按回车添加</p>
                         <p class="text-xs text-gray-500 mt-1">支持蔬菜、肉类、调料等 (最多10种)</p>
                     </div>
 
@@ -26,7 +26,7 @@
                             <div
                                 v-for="ingredient in ingredients"
                                 :key="ingredient"
-                                class="inline-flex items-center gap-2 bg-yellow-400 text-dark-800 px-3 py-2 rounded-full text-sm font-medium border-2 border-[#0A0910]"
+                                class="inline-flex items-center gap-2 bg-yellow-400 text-dark-800 px-3 py-2 rounded-full text-sm font-medium border-2 border-[#0A0910] min-h-[44px]"
                             >
                                 {{ ingredient }}
                                 <button @click="removeIngredient(ingredient)" class="hover:bg-yellow-500 rounded-full p-1 transition-colors">
@@ -41,7 +41,7 @@
                                 v-model="currentIngredient"
                                 @keyup.enter="addIngredient"
                                 placeholder="输入食材名称，按回车添加..."
-                                class="w-full p-3 md:p-4 border-2 border-[#0A0910] rounded-lg text-sm md:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-pink-400"
+                                class="w-full p-3 md:p-4 border-2 border-[#0A0910] rounded-lg text-base md:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-pink-400 min-h-[44px]"
                             />
                         </div>
 
@@ -49,7 +49,7 @@
                         <div class="mt-4">
                             <button
                                 @click="toggleIngredientPicker"
-                                class="flex items-center justify-between w-full p-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200"
+                                class="flex items-center justify-between w-full p-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 min-h-[44px]"
                             >
                                 <span class="flex items-center gap-2">
                                     <span class="text-base">🥬</span>
@@ -81,7 +81,7 @@
                                                     :key="item"
                                                     @click="quickAddIngredient(item)"
                                                     :disabled="ingredients.includes(item) || ingredients.length >= 10"
-                                                    class="px-3 py-1.5 text-xs font-medium rounded-full border border-gray-300 hover:border-pink-400 hover:bg-pink-50 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200 transition-all duration-200 hover:shadow-sm"
+                                                    class="px-3 py-2 text-xs font-medium rounded-full border border-gray-300 hover:border-pink-400 hover:bg-pink-50 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200 transition-all duration-200 hover:shadow-sm min-h-[36px]"
                                                     :class="{
                                                         'bg-yellow-100 border-yellow-400 text-yellow-800 shadow-sm': ingredients.includes(item),
                                                         'hover:scale-105': !ingredients.includes(item) && ingredients.length < 10

@@ -16,6 +16,31 @@ body {
     font-family: 'Noto Sans SC', sans-serif;
     background: #fbbf24;
     min-height: 100vh;
+    /* 移动端优化 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* 防止移动端双击缩放 */
+    touch-action: manipulation;
+}
+
+/* 移动端基础优化 */
+@media (max-width: 768px) {
+    /* 确保最小字体大小 */
+    html {
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+    }
+    
+    /* 优化移动端滚动 */
+    * {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* 确保按钮和链接有足够的触摸区域 */
+    button, a {
+        min-height: 44px;
+        min-width: 44px;
+    }
 }
 
 /* 自定义动画 */
@@ -104,4 +129,89 @@ body {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+/* 移动端专用工具类 */
+@media (max-width: 768px) {
+    /* 移动端字体大小优化 */
+    .mobile-text-xs {
+        font-size: 0.75rem;
+        line-height: 1rem;
+    }
+    
+    .mobile-text-sm {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+    
+    .mobile-text-base {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+    
+    .mobile-text-lg {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+    }
+    
+    .mobile-text-xl {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+    
+    /* 移动端间距优化 */
+    .mobile-p-2 {
+        padding: 0.5rem;
+    }
+    
+    .mobile-p-3 {
+        padding: 0.75rem;
+    }
+    
+    .mobile-p-4 {
+        padding: 1rem;
+    }
+    
+    .mobile-mb-2 {
+        margin-bottom: 0.5rem;
+    }
+    
+    .mobile-mb-3 {
+        margin-bottom: 0.75rem;
+    }
+    
+    .mobile-mb-4 {
+        margin-bottom: 1rem;
+    }
+    
+    /* 移动端触摸优化 */
+    .mobile-touch-target {
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* 移动端滚动优化 */
+    .mobile-scroll {
+        -webkit-overflow-scrolling: touch;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .mobile-scroll::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* 隐藏滚动条但保持滚动功能 */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
 }
