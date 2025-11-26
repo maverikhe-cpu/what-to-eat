@@ -145,7 +145,7 @@
                     <button
                         @click="resetSelection"
                         :disabled="isGenerating"
-                        class="px-6 py-3 bg-gray-500 text-white rounded-xl font-semibold hover:bg-gray-600 transition-all transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                        class="px-6 py-3 md:py-4 bg-gray-500 text-white rounded-xl font-semibold hover:bg-gray-600 transition-all transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[48px] text-base md:text-lg"
                     >
                         🎲 重新选择
                     </button>
