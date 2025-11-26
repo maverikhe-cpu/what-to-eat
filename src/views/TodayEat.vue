@@ -165,7 +165,6 @@
         </div>
 
         <!-- 底部 -->
-        <GlobalFooter />
     </div>
 </template>
 
@@ -177,7 +176,6 @@ import type { Recipe, CuisineType } from '@/types'
 import { generateRecipe } from '@/services/aiService'
 import RecipeCard from '@/components/RecipeCard.vue'
 import GlobalNavigation from '@/components/GlobalNavigation.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 
 // 状态管理
 const isSelecting = ref(false)

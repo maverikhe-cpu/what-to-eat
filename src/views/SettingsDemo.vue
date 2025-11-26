@@ -109,12 +109,10 @@
         </div>
 
         <!-- 底部 -->
-        <GlobalFooter />
     </div>
 </template>
 
 <script setup>
 import GlobalNavigation from '@/components/GlobalNavigation.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 import ConfigTest from '@/components/ConfigTest.vue'
 </script>

@@ -568,7 +568,6 @@
         </div>
 
         <!-- 底部 -->
-        <GlobalFooter />
     </div>
 </template>
 
@@ -625,7 +624,6 @@ import { cuisines } from '@/config/cuisines'
 import { ingredientCategories } from '@/config/ingredients'
 import RecipeCard from '@/components/RecipeCard.vue'
 import GlobalNavigation from '@/components/GlobalNavigation.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 import { generateCustomRecipe, generateMultipleRecipesStream, generateRecipe } from '@/services/aiService'
 import type { Recipe, CuisineType } from '@/types'
 

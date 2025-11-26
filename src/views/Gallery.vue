@@ -180,7 +180,6 @@
         <ConfirmModal v-if="showClearConfirm" title="确认清空图库" message="确定要清空所有图片吗？此操作不可恢复。" @confirm="clearAllImages" @cancel="showClearConfirm = false" />
 
         <!-- 底部 -->
-        <GlobalFooter />
     </div>
 </template>
 
@@ -188,7 +187,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { GalleryService, type GalleryImage } from '@/services/galleryService'
 import GlobalNavigation from '@/components/GlobalNavigation.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 import ImageModal from '@/components/ImageModal.vue'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 

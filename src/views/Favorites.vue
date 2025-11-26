@@ -192,7 +192,6 @@
         <ConfirmModal v-if="removingRecipeId" title="确认取消收藏" message="确定要取消收藏这道菜谱吗？" @confirm="removeFavorite" @cancel="removingRecipeId = null" />
 
         <!-- 底部 -->
-        <GlobalFooter />
     </div>
 </template>
 
@@ -202,7 +201,6 @@ import type { FavoriteRecipe } from '@/types'
 import { FavoriteService } from '@/services/favoriteService'
 import RecipeCard from '@/components/RecipeCard.vue'
 import GlobalNavigation from '@/components/GlobalNavigation.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 
 import NotesModal from '@/components/NotesModal.vue'
 import ConfirmModal from '@/components/ConfirmModal.vue'

@@ -422,14 +422,12 @@
         </div>
 
         <!-- 底部 -->
-        <GlobalFooter />
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import GlobalNavigation from '@/components/GlobalNavigation.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 
 // 滚动到支持区域
 const scrollToSupport = () => {

@@ -275,7 +275,6 @@
         </div>
 
         <!-- 全局底部 -->
-        <GlobalFooter />
     </div>
 </template>
 
@@ -286,7 +285,6 @@ import type { SauceRecipe, SaucePreference } from '@/types'
 import { useCaseOptions } from '@/config/sauces'
 import SauceRecipeComponent from '@/components/SauceRecipe.vue'
 import GlobalNavigation from '@/components/GlobalNavigation.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 
 // 响应式数据
 const searchQuery = ref('')

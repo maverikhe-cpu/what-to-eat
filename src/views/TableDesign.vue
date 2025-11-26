@@ -436,7 +436,6 @@
         </div>
 
         <!-- 底部 -->
-        <GlobalFooter />
     </div>
 
     <!-- 菜谱弹窗 -->
@@ -476,7 +475,6 @@ import { ref, reactive, Teleport, Transition, onMounted, onUnmounted } from 'vue
 import type { Recipe } from '@/types'
 import RecipeCard from '@/components/RecipeCard.vue'
 import GlobalNavigation from '@/components/GlobalNavigation.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 import { generateTableMenu, generateDishRecipe } from '@/services/aiService'
 
 // 配置选项

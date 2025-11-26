@@ -173,7 +173,6 @@
         </div>
 
         <!-- 全局底部 -->
-        <GlobalFooter />
     </div>
 </template>
 
@@ -184,7 +183,6 @@ import type { FortuneType, FortuneResult, DailyFortuneParams, MoodFortuneParams,
 import { zodiacConfigs, animalConfigs, moodConfigs, fortuneTeller, getRandomGreeting, getRandomMysticalWord } from '@/config/fortune'
 import FortuneCard from '@/components/FortuneCard.vue'
 import GlobalNavigation from '@/components/GlobalNavigation.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 
 // 占卜类型配置
 const fortuneTypes = [

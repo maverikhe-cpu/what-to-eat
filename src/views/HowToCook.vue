@@ -125,7 +125,6 @@
         </div>
 
         <!-- 全局底部 -->
-        <GlobalFooter />
     </div>
 </template>
 
@@ -135,7 +134,6 @@ import { generateDishRecipeByName } from '@/services/aiService'
 import type { Recipe } from '@/types'
 import RecipeCard from '@/components/RecipeCard.vue'
 import GlobalNavigation from '@/components/GlobalNavigation.vue'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 
 // 响应式数据
 const dishName = ref('')
