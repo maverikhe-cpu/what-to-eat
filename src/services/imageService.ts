@@ -11,6 +11,12 @@ export const generateRecipeImage = async (recipe: Recipe): Promise<GeneratedImag
     // 从设置中获取图片生成配置
     const config = getImageGenerationConfig()
 
+    // 确保模型名称存在，如果没有则使用默认值
+    if (!config.model) {
+        console.warn('图片生成模型名称未配置，使用默认值: cogview-3-flash')
+        config.model = 'cogview-3-flash'
+    }
+
     // 构建图片生成的提示词
     const prompt = buildImagePrompt(recipe)
 
@@ -25,7 +31,7 @@ export const generateRecipeImage = async (recipe: Recipe): Promise<GeneratedImag
                 // 注意：不再包含 Authorization header，由服务器端代理添加
             },
             body: JSON.stringify({
-                model: config.model,
+                model: config.model || 'cogview-3-flash',
                 prompt: prompt,
                 size: `${sizeToUse.width}x${sizeToUse.height}`,
                 n: 1,

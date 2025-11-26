@@ -271,7 +271,7 @@ export const generateTableMenu = async (config: {
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -339,7 +339,7 @@ export const generateDishRecipe = async (dishName: string, dishDescription: stri
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -416,7 +416,7 @@ export const generateCustomRecipe = async (ingredients: string[], customPrompt: 
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -547,7 +547,7 @@ export const getNutritionAnalysis = async (recipe: Recipe): Promise<NutritionAna
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -613,7 +613,7 @@ export const getWinePairing = async (recipe: Recipe): Promise<WinePairing> => {
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -896,7 +896,7 @@ export const testAIConnection = async (): Promise<boolean> => {
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'user',
@@ -948,7 +948,7 @@ export const generateDishRecipeByName = async (dishName: string): Promise<Recipe
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -1051,7 +1051,7 @@ export const generateSauceRecipe = async (sauceName: string): Promise<SauceRecip
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -1153,7 +1153,7 @@ export const recommendSauces = async (preferences: SaucePreference): Promise<str
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -1253,7 +1253,7 @@ ${request.customRequirements ? `- 特殊要求：${request.customRequirements}` 
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -1338,7 +1338,7 @@ export const getSaucePairings = async (sauceName: string): Promise<string[]> => 
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -1402,7 +1402,7 @@ export const generateDailyFortune = async (params: DailyFortuneParams): Promise<
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -1485,7 +1485,7 @@ export const generateMoodCooking = async (params: MoodFortuneParams): Promise<Fo
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -1572,7 +1572,7 @@ export const generateCoupleCooking = async (params: CoupleFortuneParams): Promis
         const apiConfig = getTextGenerationConfig()
 
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -1654,7 +1654,7 @@ export const generateNumberFortune = async (params: NumberFortuneParams): Promis
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
@@ -1727,7 +1727,7 @@ export const chatStream = async (
     }
 
     const body = JSON.stringify({
-        model: config.model,
+        model: config.model || 'deepseek-chat',
         messages,
         temperature: config.temperature,
         stream: true
