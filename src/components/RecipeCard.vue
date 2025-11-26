@@ -399,6 +399,25 @@ const generateImage = async () => {
     }
 }
 
+// 自动生成图片功能
+onMounted(() => {
+    if (props.autoGenerateImage && props.recipe) {
+        // 延迟一点时间，让菜谱先渲染完成
+        setTimeout(() => {
+            generateImage()
+        }, 500)
+    }
+})
+
+// 监听 recipe 变化，如果 autoGenerateImage 为 true，自动生成图片
+watch(() => props.recipe, (newRecipe) => {
+    if (props.autoGenerateImage && newRecipe && !generatedImage.value && !isGeneratingImage.value) {
+        setTimeout(() => {
+            generateImage()
+        }, 500)
+    }
+}, { deep: true })
+
 const handleImageError = () => {
     imageError.value = '图片加载失败'
     generatedImage.value = null
