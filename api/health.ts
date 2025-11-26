@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { VercelRequest, VercelResponse } from '@vercel/node'
 
 /**
  * 健康检查端点，用于诊断代理配置
@@ -8,19 +8,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // 设置 CORS 头
     res.setHeader('Access-Control-Allow-Origin', '*')
 
+    const textApiKey = process.env.TEXT_GENERATION_API_KEY || ''
+    const imageApiKey = process.env.IMAGE_GENERATION_API_KEY || ''
+
     const config = {
-      hasTextApiKey: !!process.env.TEXT_GENERATION_API_KEY,
+      hasTextApiKey: !!textApiKey,
       hasTextBaseUrl: !!process.env.TEXT_GENERATION_BASE_URL,
-      hasImageApiKey: !!process.env.IMAGE_GENERATION_API_KEY,
+      hasImageApiKey: !!imageApiKey,
       hasImageBaseUrl: !!process.env.IMAGE_GENERATION_BASE_URL,
       textBaseUrl: process.env.TEXT_GENERATION_BASE_URL || 'not configured',
       imageBaseUrl: process.env.IMAGE_GENERATION_BASE_URL || 'not configured',
       // 不显示完整的 API key，只显示前几个字符
-      textApiKeyPrefix: process.env.TEXT_GENERATION_API_KEY 
-        ? `${process.env.TEXT_GENERATION_API_KEY.substring(0, 8)}...` 
+      textApiKeyPrefix: textApiKey 
+        ? `${textApiKey.substring(0, 8)}...` 
         : 'not configured',
-      imageApiKeyPrefix: process.env.IMAGE_GENERATION_API_KEY 
-        ? `${process.env.IMAGE_GENERATION_API_KEY.substring(0, 8)}...` 
+      imageApiKeyPrefix: imageApiKey 
+        ? `${imageApiKey.substring(0, 8)}...` 
         : 'not configured',
     }
 
@@ -35,7 +38,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.status(500).json({
       status: 'error',
       message: 'Health check failed',
-      error: error?.message || 'Unknown error',
+      error: error?.message || String(error),
       stack: process.env.NODE_ENV === 'development' ? error?.stack : undefined
     })
   }
