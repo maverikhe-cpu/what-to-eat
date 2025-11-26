@@ -130,7 +130,7 @@
                     <button
                         @click="generateRecipeFromSelection"
                         :disabled="isGenerating"
-                        class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                        class="px-6 py-3 md:py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[48px] text-base md:text-lg"
                     >
                         <span v-if="isGenerating" class="flex items-center gap-2">
                             <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
