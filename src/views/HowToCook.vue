@@ -15,9 +15,9 @@
                         <div class="relative">
                             <input
                                 v-model="dishName"
-                                @keyup.enter="searchRecipe"
+                                @keyup.enter="generateAll"
                                 placeholder="例如：红烧肉、宫保鸡丁、麻婆豆腐..."
-                                class="w-full p-4 border-2 border-[#0A0910] rounded-lg text-md font-medium focus:outline-none focus:ring-2 focus:ring-pink-400"
+                                class="w-full p-3 md:p-4 border-2 border-[#0A0910] rounded-lg text-base md:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-pink-400 min-h-[44px]"
                             />
                             <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                                 <span class="text-2xl">🔍</span>
@@ -26,20 +26,20 @@
 
 
 
-                        <!-- 搜索按钮 -->
+                        <!-- 一键生成按钮 -->
                         <button
-                            @click="searchRecipe"
+                            @click="generateAll"
                             :disabled="!dishName.trim() || isLoading"
-                            class="w-full bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 disabled:from-gray-400 disabled:to-gray-400 text-white px-6 py-4 rounded-lg font-bold text-md border-2 border-[#0A0910] transition-all duration-300 transform  disabled:scale-100 disabled:cursor-not-allowed shadow-lg"
+                            class="w-full bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 disabled:from-gray-400 disabled:to-gray-400 text-white px-6 py-4 md:py-5 rounded-lg font-bold text-base md:text-lg border-2 border-[#0A0910] transition-all duration-300 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed shadow-lg min-h-[48px]"
                         >
                             <span class="flex items-center gap-2 justify-center">
                                 <template v-if="isLoading">
                                     <div class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
-                                    <span>AI大师思考中...</span>
+                                    <span>{{ loadingText }}</span>
                                 </template>
                                 <template v-else>
-                                    <span class="text-xl">🔍</span>
-                                    <span>开始学做菜</span>
+                                    <span class="text-xl">✨</span>
+                                    <span>一键生成食材、菜谱和图片</span>
                                 </template>
                             </span>
                         </button>
@@ -80,16 +80,16 @@
                         <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-500 rounded-lg flex items-center justify-center mx-auto mb-4 animate-pulse">
                             <span class="text-white text-2xl">👨‍🍳</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-700 mb-2">AI大师正在为您准备教程...</h3>
-                        <p class="text-gray-500">请稍等片刻，精彩内容即将呈现</p>
+                        <h3 class="text-xl font-bold text-gray-700 mb-2">{{ loadingText }}</h3>
+                        <p class="text-gray-500">{{ loadingSubtext }}</p>
                         <div class="mt-4">
                             <div class="animate-spin w-8 h-8 border-4 border-pink-400 border-t-transparent rounded-full mx-auto"></div>
                         </div>
                     </div>
 
                     <!-- 菜谱内容 -->
-                    <div v-if="recipe" class="max-w-2xl mx-auto border-2 border-[#333333] rounded-lg overflow-hidden">
-                        <RecipeCard :recipe="recipe" :show-actions="true" />
+                    <div v-if="recipe" class="max-w-2xl mx-auto border-2 border-[#333333] rounded-lg overflow-hidden animate-fade-in-up">
+                        <RecipeCard :recipe="recipe" :show-actions="true" :auto-generate-image="true" />
                     </div>
                 </div>
           
@@ -140,6 +140,8 @@ const dishName = ref('')
 const recipe = ref<Recipe | null>(null)
 const isLoading = ref(false)
 const searchHistory = ref<string[]>([])
+const loadingText = ref('AI大师思考中...')
+const loadingSubtext = ref('正在为您准备详细的菜谱...')
 
 // 页面加载时恢复历史记录
 onMounted(() => {
@@ -156,11 +158,11 @@ onMounted(() => {
 // 选择菜品
 const selectDish = (dish: string) => {
     dishName.value = dish
-    searchRecipe()
+    generateAll()
 }
 
-// 搜索菜谱
-const searchRecipe = async () => {
+// 一键生成：菜谱 + 图片
+const generateAll = async () => {
     if (!dishName.value.trim() || isLoading.value) return
 
     const searchTerm = dishName.value.trim()
@@ -176,8 +178,14 @@ const searchRecipe = async () => {
 
     isLoading.value = true
     recipe.value = null
+    loadingText.value = 'AI大师思考中...'
+    loadingSubtext.value = '正在为您准备详细的菜谱...'
 
     try {
+        // 步骤1: 生成菜谱
+        loadingText.value = '正在生成菜谱...'
+        loadingSubtext.value = 'AI大师正在分析食材和制作步骤...'
+        
         const result = await generateDishRecipeByName(searchTerm)
         recipe.value = result
         
@@ -188,9 +196,19 @@ const searchRecipe = async () => {
                 resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
             }
         }, 100)
+        
+        // 步骤2: 图片会在 RecipeCard 组件中自动生成（通过 auto-generate-image prop）
+        // 这里不需要额外处理，RecipeCard 会自动处理图片生成
+        
     } catch (error) {
-        console.error('搜索菜谱失败:', error)
-        // 这里可以添加错误提示
+        console.error('生成失败:', error)
+        loadingText.value = '生成失败'
+        loadingSubtext.value = error instanceof Error ? error.message : '请稍后重试'
+        
+        // 显示错误提示
+        setTimeout(() => {
+            alert(error instanceof Error ? error.message : '生成失败，请稍后重试')
+        }, 500)
     } finally {
         isLoading.value = false
     }

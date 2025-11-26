@@ -248,7 +248,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onUnmounted } from 'vue'
+import { computed, ref, onUnmounted, onMounted, watch } from 'vue'
 import type { Recipe } from '@/types'
 import { generateRecipeImage, type GeneratedImage } from '@/services/imageService'
 import { getNutritionAnalysis, getWinePairing } from '@/services/aiService'
@@ -261,15 +261,18 @@ import ImageModal from './ImageModal.vue'
 interface Props {
     recipe: Recipe
     showFavoriteButton?: boolean
+    autoGenerateImage?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    showFavoriteButton: true
+    showFavoriteButton: true,
+    autoGenerateImage: false
 })
 
 const emit = defineEmits<{
     favoriteChanged: [isFavorited: boolean]
 }>()
+
 const isExpanded = ref(false)
 const isGeneratingImage = ref(false)
 const generatedImage = ref<GeneratedImage | null>(null)
