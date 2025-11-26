@@ -1,6 +1,8 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node'
-
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+/**
+ * 图片生成 API 代理
+ * 代理前端请求到图片生成 API，保护 API 密钥安全
+ */
+module.exports = async function handler(req, res) {
   // 处理 CORS 预检请求
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -52,11 +54,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // 转发响应状态码和内容
     res.status(response.status).json(data)
-  } catch (error: any) {
+  } catch (error) {
     console.error('Image API proxy error:', error)
     res.status(500).json({ 
       error: 'Internal server error',
-      message: error.message 
+      message: error?.message || String(error)
     })
   }
 }
