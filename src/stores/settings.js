@@ -1,18 +1,21 @@
 import { ref, reactive } from 'vue'
 
 // 默认配置（从环境变量读取）
+// 注意：在生产环境中，baseUrl 和 apiKey 不再使用（使用代理），但 model 仍需要从前端配置
 const getDefaultSettings = () => ({
     textGeneration: {
-        baseUrl: import.meta.env.VITE_TEXT_GENERATION_BASE_URL,
-        apiKey: import.meta.env.VITE_TEXT_GENERATION_API_KEY,
-        model: import.meta.env.VITE_TEXT_GENERATION_MODEL,
+        baseUrl: import.meta.env.VITE_TEXT_GENERATION_BASE_URL || '',
+        apiKey: import.meta.env.VITE_TEXT_GENERATION_API_KEY || '',
+        // 模型名称：优先使用环境变量，如果没有则使用默认值
+        model: import.meta.env.VITE_TEXT_GENERATION_MODEL || 'deepseek-chat',
         temperature: parseFloat(import.meta.env.VITE_TEXT_GENERATION_TEMPERATURE) || 0.7,
         timeout: parseInt(import.meta.env.VITE_TEXT_GENERATION_TIMEOUT) || 300000
     },
     imageGeneration: {
-        baseUrl: import.meta.env.VITE_IMAGE_GENERATION_BASE_URL,
-        apiKey: import.meta.env.VITE_IMAGE_GENERATION_API_KEY,
-        model: import.meta.env.VITE_IMAGE_GENERATION_MODEL
+        baseUrl: import.meta.env.VITE_IMAGE_GENERATION_BASE_URL || '',
+        apiKey: import.meta.env.VITE_IMAGE_GENERATION_API_KEY || '',
+        // 模型名称：优先使用环境变量，如果没有则使用默认值
+        model: import.meta.env.VITE_IMAGE_GENERATION_MODEL || 'cogview-3-flash'
     }
 })
 
@@ -21,16 +24,16 @@ const getLatestEnvSettings = () => {
     // 强制重新读取环境变量
     return {
         textGeneration: {
-            baseUrl: import.meta.env.VITE_TEXT_GENERATION_BASE_URL,
-            apiKey: import.meta.env.VITE_TEXT_GENERATION_API_KEY,
-            model: import.meta.env.VITE_TEXT_GENERATION_MODEL,
+            baseUrl: import.meta.env.VITE_TEXT_GENERATION_BASE_URL || '',
+            apiKey: import.meta.env.VITE_TEXT_GENERATION_API_KEY || '',
+            model: import.meta.env.VITE_TEXT_GENERATION_MODEL || 'deepseek-chat',
             temperature: parseFloat(import.meta.env.VITE_TEXT_GENERATION_TEMPERATURE) || 0.7,
             timeout: parseInt(import.meta.env.VITE_TEXT_GENERATION_TIMEOUT) || 300000
         },
         imageGeneration: {
-            baseUrl: import.meta.env.VITE_IMAGE_GENERATION_BASE_URL,
-            apiKey: import.meta.env.VITE_IMAGE_GENERATION_API_KEY,
-            model: import.meta.env.VITE_IMAGE_GENERATION_MODEL
+            baseUrl: import.meta.env.VITE_IMAGE_GENERATION_BASE_URL || '',
+            apiKey: import.meta.env.VITE_IMAGE_GENERATION_API_KEY || '',
+            model: import.meta.env.VITE_IMAGE_GENERATION_MODEL || 'cogview-3-flash'
         }
     }
 }

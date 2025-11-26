@@ -43,6 +43,12 @@ export const generateRecipe = async (ingredients: string[], cuisine: CuisineType
         const aiClient = createAiClient()
         const apiConfig = getTextGenerationConfig()
 
+        // 确保模型名称存在，如果没有则使用默认值
+        if (!apiConfig.model) {
+            console.warn('模型名称未配置，使用默认值: deepseek-chat')
+            apiConfig.model = 'deepseek-chat'
+        }
+
         // 构建提示词
         let prompt = `${cuisine.prompt}
 
@@ -76,7 +82,7 @@ export const generateRecipe = async (ingredients: string[], cuisine: CuisineType
 
         // 调用AI接口（通过代理）
         const response = await aiClient.post('', {
-            model: apiConfig.model,
+            model: apiConfig.model || 'deepseek-chat',
             messages: [
                 {
                     role: 'system',
